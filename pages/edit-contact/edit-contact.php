@@ -3,8 +3,11 @@ require('../../db.php');
 include("../../auth.php");
 $id = $_REQUEST['id'];
 $query = "SELECT * from new_record where id='" . $id . "'";
+$queryImg = "Select * from new_record ORDER BY id desc;";
 $result = mysqli_query($con, $query) or die();
+$resultImg = mysqli_query($con, $queryImg);
 $row = mysqli_fetch_assoc($result);
+$rowImg = mysqli_fetch_assoc($resultImg)
 ?>
 
 <!DOCTYPE html>
@@ -26,6 +29,7 @@ $row = mysqli_fetch_assoc($result);
     </header>
     <?php
     if (isset($_POST['new']) && $_POST['new'] == 1) {
+
         $id = $_REQUEST['id'];
         $name = $_REQUEST['name'];
         $email = $_REQUEST['email'];
@@ -38,14 +42,31 @@ $row = mysqli_fetch_assoc($result);
     } else {
     ?>
         <div class="container mt-5">
-            <form action="" method="post" id="edit-contact-form">
+            <form action="" method="post" id="edit-contact-form" enctype="multipart/form-data">
                 <input type="hidden" name="new" value="1" />
                 <input name="id" type="hidden" value="<?php echo $row['id']; ?>" />
+
+                <div class="row">
+                    <div class="col-md-12 d-flex justify-content-evenly align-items-center">
+                        <div class="w-50 d-flex justify-content-evenly align-items-center">
+                            <img src="<?php echo '../../img/' . $rowImg["email"] . '.png' ?>" alt="" class="w-25 rounded-circle">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group mt-3">
+                            <label for="first-name">Avatar</label>
+                            <input type="file" class="form-control" name="avatar" id="avatar">
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group mt-3">
                             <label for="first-name">Name</label>
-                            <input type="text" class="form-control" placeholder="Enter name" name="name" id="first-name" value="<?php echo $row['name'];?>">
+                            <input type="text" class="form-control" placeholder="Enter name" name="name" id="first-name" value="<?php echo $row['name']; ?>">
                         </div>
                     </div>
                 </div>
@@ -53,19 +74,19 @@ $row = mysqli_fetch_assoc($result);
                     <div class="col-md-6">
                         <div class="form-group mt-3">
                             <label for="email">Email address</label>
-                            <input type="email" class="form-control" placeholder="Enter email" name="email" id="email" value="<?php echo $row['email'];?>">
+                            <input type="email" class="form-control" placeholder="Enter email" name="email" id="email" value="<?php echo $row['email']; ?>">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group mt-3">
                             <label for="phone-number">Phone Number</label>
-                            <input type="tel" class="form-control" placeholder="Enter phone number" name="phone" id="phone-number" value="<?php echo $row['phone'];?>">
+                            <input type="tel" class="form-control" placeholder="Enter phone number" name="phone" id="phone-number" value="<?php echo $row['phone']; ?>">
                         </div>
                     </div>
                 </div>
 
                 <button type="submit" class="btn btn-success mt-3 mb-5">Accept changes</button>
-                <a href="../../index.php" class="btn btn-secondary mt-3 mb-5">Back</a>
+                <a href="../../index.php" class="btn btn-danger mt-3 mb-5">Cancel</a>
             </form>
         <?php } ?>
         </div>

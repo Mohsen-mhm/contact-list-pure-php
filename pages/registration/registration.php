@@ -10,7 +10,6 @@
 <body>
     <?php
     require('../../db.php');
-    // If form submitted, insert values into the database.
     if (isset($_REQUEST['username'])) {
         $username = stripslashes($_REQUEST['username']);
         $username = mysqli_real_escape_string($con, $username);

@@ -2,18 +2,36 @@
 require('../../db.php');
 include("../../auth.php");
 
+$msg = '';
+
 if (isset($_POST['new']) && $_POST['new'] == 1) {
+    
     $name = $_REQUEST['name'];
     $email = $_REQUEST['email'];
     $phone = $_REQUEST['phone'];
     $submittedby = $_SESSION["username"];
+
+    $filename = $_FILES["avatar"]["name"];
+    $tempname = $_FILES["avatar"]["tmp_name"];
+    $filename = $email .'.png';
+    $folder = "../../img/" . $filename;
+
+    
+
     $ins_query = "insert into new_record
-    (`name`,`email`,`phone`,`submittedby`)values
-    ('$name','$email','$phone','$submittedby')";
+    (`avatar`,`name`,`email`,`phone`,`submittedby`)values
+    ('$filename','$name','$email','$phone','$submittedby')";
     mysqli_query($con, $ins_query) or die();
+
+    if (move_uploaded_file($tempname, $folder)) {
+        echo "<h3>  Image uploaded successfully!</h3>";
+    } else {
+        echo "<h3>  Failed to upload image!</h3>";
+    }
     header("Location: ../../index.php");
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,8 +51,17 @@ if (isset($_POST['new']) && $_POST['new'] == 1) {
         <h3 class="m-2">Add Contact</h3>
     </header>
     <div class="container mt-5">
-        <form action="" method="post" id="add-contact-form">
+        <form action="" method="post" id="add-contact-form" enctype="multipart/form-data">
             <input type="hidden" name="new" value="1" />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group mt-3">
+                        <label for="first-name">Avatar</label>
+                        <input type="file" class="form-control" name="avatar" id="avatar">
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-md-12">
@@ -61,7 +88,7 @@ if (isset($_POST['new']) && $_POST['new'] == 1) {
             </div>
 
             <button type="submit" class="btn btn-success mt-3 mb-5">Add to list</button>
-            <a href="../../index.php" class="btn btn-secondary mt-3 mb-5">Back</a>
+            <a href="../../index.php" class="btn btn-danger mt-3 mb-5">Cancel</a>
         </form>
     </div>
 

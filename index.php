@@ -1,5 +1,4 @@
 <?php
-//include auth.php file on all secure pages
 require('db.php');
 include("auth.php");
 ?>
@@ -52,6 +51,7 @@ include("auth.php");
             <thead class="thead-dark">
                 <tr>
                     <th class="text-center">Number</th>
+                    <th class="text-center">Avatar</th>
                     <th class="text-center">Name</th>
                     <th class="text-center">Email</th>
                     <th class="text-center">Phone Number</th>
@@ -65,7 +65,12 @@ include("auth.php");
                 $result = mysqli_query($con, $sel_query);
                 while ($row = mysqli_fetch_assoc($result)) { ?>
                     <tr>
-                        <td class="text-center"><?php echo $count; ?></td>
+                        <td class="text-center"><b><?php echo $count; ?></b></td>
+                        <td class="text-center">
+                            <div class="w-100">
+                                <img src="<?php echo 'img/' . $row["email"] . '.png' ?>" alt="" class="w-25 rounded-circle">
+                            </div>
+                        </td>
                         <td class="text-center"><?php echo $row["name"]; ?></td>
                         <td class="text-center"><?php echo $row["email"]; ?></td>
                         <td class="text-center"><?php echo $row["phone"]; ?></td>
@@ -78,6 +83,14 @@ include("auth.php");
                 } ?>
             </tbody>
         </table>
+        <nav class="d-flex justify-content-evenly align-items-center">
+            <ul class="pagination">
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </nav>
     </main>
 
     <script src="vendor/bootstrap/bootstrap-js/bootstrap.bundle.min.js"></script>
