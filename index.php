@@ -13,6 +13,7 @@ include("auth.php");
     <link rel="stylesheet" href="vendor/bootstrap/bootstrap-css/bootstrap.min.css">
     <link rel="stylesheet" href="font/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="font/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="styles/simplePagination.css">
     <link rel="stylesheet" href="styles/main.css">
     <title>Contact List</title>
 </head>
@@ -58,17 +59,17 @@ include("auth.php");
                     <th class="text-center">Options</th>
                 </tr>
             </thead>
-            <tbody class="contact-list-body">
+            <tbody class="contact-list-body list-wrapper">
                 <?php
                 $count = 1;
                 $sel_query = "Select * from new_record ORDER BY id desc;";
                 $result = mysqli_query($con, $sel_query);
                 while ($row = mysqli_fetch_assoc($result)) { ?>
-                    <tr>
+                    <tr class="list-item">
                         <td class="text-center"><b><?php echo $count; ?></b></td>
                         <td class="text-center">
                             <div class="w-100">
-                                <img src="<?php echo 'img/' . $row["email"] . '.png' ?>" alt="" class="w-25 rounded-circle">
+                                <img src="<?php echo 'img/' . $row["email"] . '.png' ?>" alt="" class="rounded-circle" style="width: 45px;">
                             </div>
                         </td>
                         <td class="text-center"><?php echo $row["name"]; ?></td>
@@ -83,19 +84,32 @@ include("auth.php");
                 } ?>
             </tbody>
         </table>
-        <nav class="d-flex justify-content-evenly align-items-center">
-            <ul class="pagination">
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                </li>
-            </ul>
-        </nav>
+        <div id="pagination-container" style="display: flex; justify-content: center;" class="m-4"></div>
     </main>
 
     <script src="vendor/bootstrap/bootstrap-js/bootstrap.bundle.min.js"></script>
     <script src="vendor/jquery/jquery-3.6.0.min.js"></script>
+    <script src="vendor/jquery/jquery.simplePagination.js"></script>
     <script src="functions/app.js"></script>
+    <script>
+        var items = $(".list-wrapper .list-item");
+        var numItems = items.length;
+        var perPage = 5;
+
+        items.slice(perPage).hide();
+
+        $('#pagination-container').pagination({
+            items: numItems,
+            itemsOnPage: perPage,
+            prevText: "Prev",
+            nextText: "Next",
+            onPageClick: function(pageNumber) {
+                var showFrom = perPage * (pageNumber - 1);
+                var showTo = showFrom + perPage;
+                items.hide().slice(showFrom, showTo).show();
+            }
+        });
+    </script>
 </body>
 
 </html>
