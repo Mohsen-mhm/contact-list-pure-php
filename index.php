@@ -1,10 +1,12 @@
 <?php
 //include auth.php file on all secure pages
+require('db.php');
 include("auth.php");
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,11 +17,12 @@ include("auth.php");
     <link rel="stylesheet" href="styles/main.css">
     <title>Contact List</title>
 </head>
+
 <body>
 
-    <header class="container-fluid d-flex justify-content-between bg-light shadow p-3">
+    <header class="container-fluid d-flex justify-content-between align-items-center bg-light shadow p-3">
         <h3 class="m-2">Contact List</h3>
-        <div class="form d-flex justify-content-between align-items-center">
+        <div class="form d-flex flex-column justify-content-between align-items-center">
             <p>Welcome <?php echo $_SESSION['username']; ?>!</p>
             <a href="./pages/login/login.php">Logout</a>
         </div>
@@ -42,28 +45,39 @@ include("auth.php");
             </div>
             <div class="col-5 d-flex justify-content-evenly align-items-center responsive-header-two">
                 <input type="search" class="form-control w-50 filter-search" placeholder="Search...">
-                <button class="d-flex align-items-center btn btn-success add-contact-btn">Add Contact <i class="fas fa-plus ms-2"></i></button>
+                <a href="./pages/add-contact/add-contact.php" class="d-flex align-items-center btn btn-success add-contact-btn">Add Contact <i class="fas fa-plus ms-2"></i></a>
             </div>
         </div>
         <table class="table table-bordered table-striped table-responsive-stack" id="tableOne">
             <thead class="thead-dark">
                 <tr>
-                    <th>Avatar</th>
-                    <th>Name</th>
-                    <th>Gender</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                    <th>Options</th>
+                    <th class="text-center">Number</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Phone Number</th>
+                    <th class="text-center">Options</th>
                 </tr>
             </thead>
-            <tbody class="contact-list-body"></tbody>
+            <tbody class="contact-list-body">
+                <?php
+                $count = 1;
+                $sel_query = "Select * from new_record ORDER BY id desc;";
+                $result = mysqli_query($con, $sel_query);
+                while ($row = mysqli_fetch_assoc($result)) { ?>
+                    <tr>
+                        <td class="text-center"><?php echo $count; ?></td>
+                        <td class="text-center"><?php echo $row["name"]; ?></td>
+                        <td class="text-center"><?php echo $row["email"]; ?></td>
+                        <td class="text-center"><?php echo $row["phone"]; ?></td>
+                        <td class="text-center">
+                            <a href="./pages/edit-contact/edit-contact.php?id=<?php echo $row["id"]; ?>"><i class="far fa-edit p-2 btn btn-primary"></i></a>
+                            <a href="./pages/delete/delete.php?id=<?php echo $row["id"]; ?>"><i class="far fa-trash p-2 btn btn-danger"></i></a>
+                        </td>
+                    </tr>
+                <?php $count++;
+                } ?>
+            </tbody>
         </table>
-        <nav class="d-flex justify-content-center align-content-center">
-            <ul class="pagination pagination-sm">
-                <li class="page-item page-one active"><a class="page-link" href="">1</a></li>
-                <li class="page-item page-two"><a class="page-link" href="">2</a></li>
-            </ul>
-        </nav>
     </main>
 
     <script src="vendor/bootstrap/bootstrap-js/bootstrap.bundle.min.js"></script>

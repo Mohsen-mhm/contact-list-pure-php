@@ -15,7 +15,6 @@
     <?php
     require('../../db.php');
     session_start();
-    // If form submitted, insert values into the database.
     if (isset($_POST['username'])) {
         $username = stripslashes($_REQUEST['username']);
         $username = mysqli_real_escape_string($con, $username);
