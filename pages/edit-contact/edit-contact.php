@@ -2,17 +2,18 @@
 require('../../db.php');
 include("../../auth.php");
 $id = $_REQUEST['id'];
-$query = "SELECT * from new_record where id='" . $id . "'";
-$queryImg = "Select * from new_record ORDER BY id desc;";
+$query = "SELECT * from records where id='" . $id . "'";
+$queryImg = "Select * from records ORDER BY id desc;";
 $result = mysqli_query($con, $query) or die();
 $resultImg = mysqli_query($con, $queryImg);
 $row = mysqli_fetch_assoc($result);
-$rowImg = mysqli_fetch_assoc($resultImg)
+$rowImg = mysqli_fetch_assoc($resultImg);
+$image = $row['avatar'];
+$image_src = "img/" . $image;
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,20 +23,19 @@ $rowImg = mysqli_fetch_assoc($resultImg)
     <link rel="stylesheet" href="../../font/fontawesome/css/fontawesome.min.css">
     <title>Edit Contact</title>
 </head>
-
 <body>
     <header class="container-fluid d-flex justify-content-center bg-light shadow p-3">
         <h3 class="m-2">Edit Contact</h3>
     </header>
     <?php
     if (isset($_POST['new']) && $_POST['new'] == 1) {
-
         $id = $_REQUEST['id'];
         $name = $_REQUEST['name'];
         $email = $_REQUEST['email'];
         $phone = $_REQUEST['phone'];
         $submittedby = $_SESSION["username"];
-        $update = "update new_record set name='" . $name . "', email='" . $email . "',
+
+        $update = "update records set name='" . $name . "', email='" . $email . "',
         phone='" . $phone . "', submittedby='" . $submittedby . "' where id='" . $id . "'";
         mysqli_query($con, $update) or die();
         header("Location: ../../index.php");
@@ -49,11 +49,10 @@ $rowImg = mysqli_fetch_assoc($resultImg)
                 <div class="row">
                     <div class="col-md-12 d-flex justify-content-evenly align-items-center">
                         <div class="w-50 d-flex justify-content-evenly align-items-center">
-                            <img src="<?php echo '../../img/' . $rowImg["email"] . '.png' ?>" alt="" class="w-25 rounded-circle">
+                            <img src="<?php echo $image_src ?>" alt="" class="w-25 rounded-circle">
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group mt-3">
@@ -94,5 +93,4 @@ $rowImg = mysqli_fetch_assoc($resultImg)
         <script src="../../vendor/bootstrap/bootstrap-js/bootstrap.bundle.min.js"></script>
         <script src="../../vendor/jquery/jquery-3.6.0.min.js"></script>
 </body>
-
 </html>

@@ -5,7 +5,6 @@ include("auth.php");
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,13 +12,10 @@ include("auth.php");
     <link rel="stylesheet" href="vendor/bootstrap/bootstrap-css/bootstrap.min.css">
     <link rel="stylesheet" href="font/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="font/fontawesome/css/fontawesome.min.css">
-    <link rel="stylesheet" href="styles/simplePagination.css">
     <link rel="stylesheet" href="styles/main.css">
     <title>Contact List</title>
 </head>
-
 <body>
-
     <header class="container-fluid d-flex justify-content-between align-items-center bg-light shadow p-3">
         <h3 class="m-2">Contact List</h3>
         <div class="form d-flex flex-column justify-content-between align-items-center">
@@ -62,19 +58,22 @@ include("auth.php");
             <tbody class="contact-list-body list-wrapper">
                 <?php
                 $count = 1;
-                $sel_query = "Select * from new_record ORDER BY id desc;";
+                $sel_query = "Select * from records WHERE submittedby = '$_SESSION[username]';";
                 $result = mysqli_query($con, $sel_query);
-                while ($row = mysqli_fetch_assoc($result)) { ?>
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $image = $row['avatar'];
+                    $image_src = "img/" . $image;
+                ?>
                     <tr class="list-item">
                         <td class="text-center"><b><?php echo $count; ?></b></td>
                         <td class="text-center">
                             <div class="w-100">
-                                <img src="<?php echo 'img/' . $row["email"] . '.png' ?>" alt="" class="rounded-circle" style="width: 45px;">
+                                <img src="<?php echo $image_src; ?>" alt="" class="rounded-circle" style="width: 45px;">
                             </div>
                         </td>
                         <td class="text-center"><?php echo $row["name"]; ?></td>
-                        <td class="text-center"><?php echo $row["email"]; ?></td>
-                        <td class="text-center"><?php echo $row["phone"]; ?></td>
+                        <td class="text-center table-responsive"><?php echo $row["email"]; ?></td>
+                        <td class="text-center table-responsive"><?php echo $row["phone"]; ?></td>
                         <td class="text-center">
                             <a href="./pages/edit-contact/edit-contact.php?id=<?php echo $row["id"]; ?>"><i class="far fa-edit p-2 btn btn-primary"></i></a>
                             <a href="./pages/delete/delete.php?id=<?php echo $row["id"]; ?>"><i class="far fa-trash p-2 btn btn-danger"></i></a>
@@ -95,7 +94,6 @@ include("auth.php");
         var items = $(".list-wrapper .list-item");
         var numItems = items.length;
         var perPage = 5;
-
         items.slice(perPage).hide();
 
         $('#pagination-container').pagination({
@@ -111,5 +109,4 @@ include("auth.php");
         });
     </script>
 </body>
-
 </html>

@@ -1,14 +1,4 @@
 $(document).ready(function () {
-    // let trElem = $('<tr></tr>')
-    // let contactImg = $('<td class="d-flex align-items-center table-responsive" style="flex-basis: 16.6667%;"><img src="' + e.picture.large + '" alt="Profile" class="w-25 rounded-5 hero-avatar"></td>')
-    // let contactName = $('<td class="table-responsive" style="flex-basis: 16.6667%;">' + e.name.title + '. ' + e.name.first + ' ' + e.name.last + '</td>')
-    // let contactGender = $('<td class="table-responsive" style="flex-basis: 16.6667%;">' + e.gender + '</td>')
-    // let contactEmail = $('<td class="table-responsive" style="flex-basis: 16.6667%;">' + e.email + '</td>')
-    // let contactPhone = $('<td class="table-responsive" style="flex-basis: 16.6667%;">' + e.phone + '</td>')
-    // let contactOptions = $('<td class="table-responsive options-btn" style="flex-basis: 16.6667%;"></td>')
-    // let deleteBtn = $('<button class="btn btn-danger me-2" style="flex-basis: 16.6667%;"><i class="fas fa-trash"></i></button>')
-    // let editBtn = $('<button class="btn btn-primary edit-contact-btn"><i class="fas fa-pencil"></i></button>')
-
     $(".filter-search").on("keyup", function () {  //Filter contacts by searching
         var value = $(this).val().toLowerCase();
         $("#tableOne tr").filter(function () {

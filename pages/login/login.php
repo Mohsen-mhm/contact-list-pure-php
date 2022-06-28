@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +9,6 @@
     <link rel="stylesheet" href="../../font/fontawesome/css/fontawesome.min.css">
     <title>login page</title>
 </head>
-
 <body>
     <?php
     require('../../db.php');
@@ -31,19 +29,20 @@
             header("Location: ../../index.php");
         } else {
             echo "<div class='form'>
-<h3>Username/password is incorrect.</h3>
-<br/>Click here to <a href='login.php'>Login</a></div>";
+                <h3 class='mt-5 text-center'>Username/password is incorrect.</h3>
+                <br/><p class='text-center'>Click here to <a href='login.php'>Login</a></p>
+                </div>";
         }
     } else {
     ?>
         <section class="container">
             <h1 class="text-center m-5">login page</h1>
             <form action="" method="post">
+
                 <div class="form-outline mb-4">
                     <label class="form-label" for="username">Username</label>
                     <input type="username" id="username" class="form-control" name="username" />
                 </div>
-
                 <div class="form-outline mb-4">
                     <label class="form-label" for="password">Password</label>
                     <input type="password" id="password" class="form-control" name="password" />
@@ -58,5 +57,4 @@
         <script src="../../vendor/jquery/jquery-3.6.0.min.js"></script>
     <?php } ?>
 </body>
-
 </html>
