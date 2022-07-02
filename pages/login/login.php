@@ -26,6 +26,7 @@
         
         if ($rows == 1) {
             $_SESSION['username'] = $username;
+            $_SESSION['loggedin_time'] = time();
             header("Location: ../../index.php");
         } else {
             echo "<div class='form'>
