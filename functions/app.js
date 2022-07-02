@@ -1,11 +1,5 @@
 $(document).ready(function () {
-    $(".filter-search").on("keyup", function () {  //Filter contacts by searching
-        var value = $(this).val().toLowerCase();
-        $("#tableOne tr").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-
+    
     $('.table-responsive-stack').each(function (i) {  //Get table responsive on tablet and mobile size
         const id = $(this).attr('id')
         $(this).find("th").each(function (i) {
