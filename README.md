@@ -6,11 +6,11 @@
 
 First create Database *register* by this command:
 
-create database `register`;
+create database `contact_list`;
 
 --------------------------------------------------
 
-then create table *records* in `register` for contacts by this command:
+then create table *records* in `contact_list` for contacts by this command:
 
 create table records(
     id int AUTO_INCREMENT,
@@ -24,7 +24,7 @@ create table records(
 
 --------------------------------------------------
 
-also create table *users* in `register` for admin by this command:
+also create table *users* in `contact_list` for admin by this command:
 
 create table users(
     id int AUTO_INCREMENT,
